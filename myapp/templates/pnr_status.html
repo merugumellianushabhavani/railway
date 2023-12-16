@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PNR Status</title>
+    <!-- Add any additional styles or scripts if needed -->
+</head>
+<style>
+body{
+    background-image:url('https://media.amtrak.com/wp-content/uploads/2020/03/RNK_Station_Fall19_0716-514-scaled.jpg');
+    background-size:100%;
+    background-repeat:no-repeat;
+
+
+}
+</style>
+<body>
+    <div style="text-align: center;">
+
+        <form method="post" action="{% url 'myapp:pnr' %}">
+            {% csrf_token %}
+            <label for="train_number">Search Train by Number:</label>
+            <input type="text" name="train_number" id="train_number" required>
+            <button type="submit" value="Search">Search</button>
+        </form>
+
+        <!-- Display train details if found -->
+        <!-- Display train details if found -->
+{% if train_details %}
+<h2>Train Details</h2>
+<p><strong>Train Name:</strong> {{ train_details.Train_Name }}</p>
+<p><strong>Train Number:</strong> {{ train_details.Train_Number }}</p>
+<p><strong>Date:</strong> {{ train_details.Date }}</p>
+<p><strong>From Station:</strong> {{ train_details.From_Station }}</p>
+<p><strong>Destination:</strong> {{ train_details.Destination }}</p>
+{% endif %}
+
+<!-- Display booking details if found -->
+{% if booking_details %}
+<h2>Booking Details</h2>
+<p><strong>From:</strong> {{ booking_details.From }}</p>
+<p><strong>To:</strong> {{ booking_details.To }}</p>
+<p><strong>Phone Number:</strong> {{ booking_details.Phonenumber }}</p>
+<p><strong>Email:</strong> {{ booking_details.Email }}</p>
+<p><strong>Departure Date:</strong> {{ booking_details.DepartureDate }}</p>
+<p><strong>Number of Seats:</strong> {{ booking_details.Noofseats }}</p>
+<p><strong>Quotas:</strong> {{ booking_details.Quotas }}</p>
+<!-- Add more details as needed -->
+{% else %}
+<p>You have not booked the train with number {{ train_number }}.</p>
+{% endif %}
+
+
+
+        <a href="{% url 'myapp:index' %}"><button class="btn btn-success">Back To Homepage</button></a>
+    </div>
+</body>
+</html>

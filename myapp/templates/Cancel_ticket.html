@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background-image:url('https://images.indianexpress.com/2021/04/Railway.jpg');
+        background-size:100%;
+        background-repeat:no-repeat;
+    }
+    .mydivstyle{
+        text-align: center;
+    }
+    h1{
+        color:white;
+    }
+    </style>
+<body>
+    
+
+    <h1 style="text-align:center;font-family:sans-serif" >Current Reservations</h1>
+    <div class="container">
+        {% for booking in bookings %}
+            <div class="tick" style="font-size:25px;color:rgb(240, 231, 231);padding:18px;padding-left:40px;">
+                &nbsp;&nbsp;From: {{ booking.From }}<br/>
+                &nbsp;&nbsp;To: {{ booking.To }}<br/>
+                &nbsp;&nbsp;Phone Number: {{ booking.Phonenumber }}<br/>
+                &nbsp;&nbsp;Email: {{ booking.Email }}<br/>
+                &nbsp;&nbsp;Departure Date: {{ booking.DepartureDate }}<br/>
+                &nbsp;&nbsp;Number of Seats: {{ booking.Noofseats }}<br/>
+                &nbsp;&nbsp;Quotas: {{ booking.Quotas }}<br/>
+                &nbsp;&nbsp;<form method="post" action="{% url 'myapp:cancel' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ booking.pk }}">
+                    <button class="btn btn-danger"style="font-size:25px: type="submit">Cancel</button>
+                </form><br/>
+            </div>
+            <br/><br/>
+        {% endfor %}
+    </div>
+ 
+</body>
+</html>
